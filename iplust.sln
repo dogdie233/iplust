@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34004.107
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iplust", "iplust\iplust.csproj", "{08361E87-3E59-4346-9028-D10A3082ADC9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{08361E87-3E59-4346-9028-D10A3082ADC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08361E87-3E59-4346-9028-D10A3082ADC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08361E87-3E59-4346-9028-D10A3082ADC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08361E87-3E59-4346-9028-D10A3082ADC9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {119342C4-A213-4AFC-B029-5A950923F347}
+	EndGlobalSection
+EndGlobal

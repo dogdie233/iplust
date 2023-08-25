@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "iplust": {
+      "commandName": "Project",
+      "commandLineArgs": "TestImage.jpg 喜多喜多 --debug"
+    }
+  }
+}
