@@ -21,6 +21,7 @@ public class QWQ : RootCommand
         AddOption(binder.reserveColorOption);
         AddOption(binder.debugOption);
         AddOption(binder.outputOption);
+        AddOption(binder.outDatedOption);
 
         this.SetHandler(DoCommand, binder);
     }
@@ -34,10 +35,10 @@ public class QWQ : RootCommand
         Logger.Debug($"图片宽: {image.Size.Width}, 图片高: {image.Size.Height}");
         Logger.Info("要加载字体了");
         var fonts = ResolveFont();
-        var fontName = argument.Font ?? "Microsoft YaHei";
-        if (!fonts.TryGet(fontName, out var fontFamily))
+        argument.Font ??= "Microsoft YaHei";
+        if (!fonts.TryGet(argument.Font, out var fontFamily))
         {
-            Logger.Error($"无法找到字体 {fontName}");
+            Logger.Error($"无法找到字体 {argument.Font}");
             Environment.Exit(1);
         }
 
@@ -56,7 +57,13 @@ public class QWQ : RootCommand
             PadColor = bgColor,
             Position = AnchorPositionMode.Top
         };
-        image.Mutate(x => x.Resize(resizeOptions).DrawText(argument.Text, font, textColor, location));
+        image.Mutate(context =>
+        {
+            context.Resize(resizeOptions);
+            if (argument.OutDated)
+                context.Saturate(0);
+            context.DrawText(argument.Text, font, textColor, location);
+        });
 
         Logger.Info("要保存了");
         if (argument.OutputName == null)
@@ -116,17 +123,18 @@ public class RootArgument
     public bool ReserveColor { get; set; } = false;
     public bool Debug { get; set; } = false;
     public string? OutputName { get; set; } = null;
+    public bool OutDated { get; set; } = false;
 }
 
 public class RootArgumentBinder : BinderBase<RootArgument>
 {
-    public readonly Argument<FileInfo> imageFileArgument = new("image", "The image you want to add text");
-    public readonly Argument<string> textArgument = new("text", "The text you want to add to the image");
-    public readonly Option<string> fontOption = new("--font", "The text font");
-    public readonly Option<bool> reserveColorOption = new("--reserve", "Use white as text color, black as background color");
+    public readonly Argument<FileInfo> imageFileArgument = new("image", "你要加字的图片");
+    public readonly Argument<string> textArgument = new("text", "你要加的字");
+    public readonly Option<string> fontOption = new("--font", "字体");
+    public readonly Option<bool> reserveColorOption = new("--reserve", "用白色的字和黑色的底");
     public readonly Option<bool> debugOption = new("--debug", "Debug mode");
-    public readonly Option<string> outputOption = new(new string[] { "--out", "-o" }, "Output file name");
-    public readonly Option<bool> grayOption = new("--gray", "遗照");
+    public readonly Option<string> outputOption = new("-o", "输出文件名");
+    public readonly Option<bool> outDatedOption = new("--outdated", "遗照");
 
     protected override RootArgument GetBoundValue(BindingContext bindingContext) => new RootArgument()
     {
@@ -136,5 +144,6 @@ public class RootArgumentBinder : BinderBase<RootArgument>
         ReserveColor = bindingContext.ParseResult.GetValueForOption(reserveColorOption),
         Debug = bindingContext.ParseResult.GetValueForOption(debugOption),
         OutputName = bindingContext.ParseResult.GetValueForOption(outputOption),
+        OutDated = bindingContext.ParseResult.GetValueForOption(outDatedOption),
     };
 }
