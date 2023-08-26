@@ -43,4 +43,9 @@ Options:
 命令执行完成后图片将会被保存在 `D:/qwq_qmq.jpg`  
 更多参数用途自行发掘  
 
+## 关于自定义字体
+将字体导入系统或放入`<程序目录>/Fonts`内  
+再使用 `--font <FontFamilyName>` 以指定生成字体
+若不使用 `--font` 参数则默认使用 `Microsoft YaHei`
+
 # 欢迎贡献
